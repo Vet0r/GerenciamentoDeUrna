@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "utils.h": "c",
-        "layouts.h": "c"
+        "layouts.h": "c",
+        "urna.h": "c"
     }
 }
