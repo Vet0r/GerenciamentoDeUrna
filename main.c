@@ -3,12 +3,13 @@
 #include <windows.h>
 
 #include "urna.h"
+#include "candidato.h"
 
 
 int main(){
     UINT CPAGE_UTF8 = 65001;
     SetConsoleOutputCP(CPAGE_UTF8);
-    Urna *Ur;
-    menuUrna();
+    Candidato *lista=NULL;
+    menuUrna(&lista);
     return 0;
 }

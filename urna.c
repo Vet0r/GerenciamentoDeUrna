@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "candidato.h"
 #include "urna.h"
 #include "utils/utils.h"
 #include "screens/screens.h"
@@ -11,17 +12,17 @@ struct urna {
     int votos;
 };
 
-void menuUrna(){
+void menuUrna(Candidato **lista){
     int opcao=exibirMenu();
     switch (opcao){
     case 1:
-        /* Adicionar Candidato */
+        inserirCandidato(lista);
         break;
     case 2:
         /* Remover Candidato */
         break;
     case 3:
-        /* Listar candidatos cadastrados */
+        listarCandidatos(*lista);
         break;
     case 4:
         /* Buscar candidato */
@@ -36,7 +37,7 @@ void menuUrna(){
         exit(0);
         break;
     default:
-        menuUrna();
+        menuUrna(lista);
         break;
     }
 }

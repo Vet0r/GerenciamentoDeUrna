@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "candidato.h"
-
-typedef struct candidato {
+#include <windows.h>
+#include "urna.h"
+struct candidato {
     char nome[20];
     int idade;
     int numero;
@@ -12,34 +12,39 @@ typedef struct candidato {
     char estado[20];
     struct candidato *proximo;
     struct candidato *anterior;
-} Candidato;
+};
 
-Candidato* criarCandidato(void){
-    Candidato * cand = (Candidato*) malloc(sizeof(Candidato));
+int i;
+struct candidato* criarCandidato(){
+    struct candidato * cand = (struct candidato*) malloc(sizeof(struct candidato));
     cand->proximo = NULL;
     cand->anterior = NULL;
     return cand;
 }
 
-void inserirCandidato(Candidato **lista, char valor[20]){
-    Candidato *aux = malloc(sizeof(Candidato));
-    Candidato *novo = malloc(sizeof(Candidato));
+void inserirCandidato(struct candidato **lista){
+     struct candidato *aux, *novo = malloc(sizeof(struct candidato));
 
     if(novo){
-        strcpy(novo->nome,valor);
+        int numero;
+        printf("Digite o numero do candidato: ");
+        scanf("%d",&numero);
+        //strcpy(novo->numero,numero);
+        novo->numero=numero;
         if(*lista == NULL){
             novo->proximo = NULL;
             novo->anterior = NULL;
             *lista = novo;
         }
-        else if(novo->nome < (*lista)->nome){
+        else if(novo->numero < (*lista)->numero){
+            printf("meio");
             novo->proximo = *lista;
             (*lista)->anterior = novo;
             *lista = novo;
         }
         else{
             aux = *lista;
-            while((aux->proximo && novo->nome) > (aux->proximo->nome)){
+            while((aux->proximo && novo->numero) > (aux->proximo->numero)){
                 aux = aux->proximo;
             }
             novo->proximo = aux->proximo;
@@ -51,13 +56,28 @@ void inserirCandidato(Candidato **lista, char valor[20]){
         }
     }
     else{
-        printf("Erro ao alocar memoria!\n");
+        printf("Erro ao alocar memoria!\nRetornando a tela inicial");
+        for (i = 0; i < 3; i++)
+        {
+            Sleep(500);
+            printf(".");
+        }
+        system("cls");
+        menuUrna(lista);
     }
+    printf("struct candidato alocado com sucesso!!! \nRetornando a tela inicial");
+    for (i = 0; i < 3; i++)
+    {
+        Sleep(500);
+        printf(".");
+    }
+    system("cls");
+    menuUrna(lista);
 }
 
-Candidato* removerCandidato(Candidato **lista, int numero){
-    Candidato *aux=NULL;
-    Candidato *remover = NULL;
+struct candidato* removerCandidato(struct candidato **lista, int numero){
+    struct candidato *aux=NULL;
+    struct candidato *remover = NULL;
 
     if(*lista){
         if((*lista)->numero == numero){
@@ -84,45 +104,49 @@ Candidato* removerCandidato(Candidato **lista, int numero){
     return remover;
 }
 
-Candidato* buscarCandidato(Candidato **lista, int numero){
-    Candidato *aux = NULL; 
-    Candidato *Candidato = NULL;
+struct candidato* buscarCandidato(struct candidato **lista, int numero){
+    struct candidato *aux = NULL; 
+    struct candidato *candidato = NULL;
 
     aux = *lista;
     while((aux && aux->numero) != (numero)){
         aux = aux->proximo;   
     }
     if(aux){
-        Candidato = aux;
+        candidato = aux;
     }
-    return Candidato;
+    return candidato;
 }
 
-void imprimirCandidatos(Candidato *candidato){
-    if (!candidato){
-        printf("não há candidatos\n");
-    }else{
-        printf("\n\tLista: ");
-        while(candidato){
-            printf("%d ", candidato->nome);
-            candidato = candidato->proximo;
-        }
-        printf("\n\n");
+void listarCandidatos(struct candidato *lista){ 
+    printf("\n\tLista: ");
+    while(lista){
+        printf("%d ", lista->numero);
+        lista = lista->proximo;
     }
+    printf("\n\n");
+    printf("Pressione qualquer tecla para retornar ao menú");
+    for (i = 0; i < 3; i++)
+    {
+        Sleep(500);
+        printf(".");
+    }
+    system("cls");
+    menuUrna(&lista);
 }
 
-Candidato* editarCandidato(Candidato **lista, int numero,int idade){
-    Candidato *aux = NULL; 
-    Candidato *Candidato = NULL;
+struct candidato* editarCandidato(struct candidato **lista, int numero,int idade){
+    struct candidato *aux = NULL; 
+    struct candidato *candidato = NULL;
 
     aux = *lista;
     while((aux && aux->numero) != (numero)){
         aux = aux->proximo;   
     }
     if(aux){
-        Candidato = aux;
+        candidato = aux;
     }
-    Candidato->idade = idade;
-    return Candidato;
+    candidato->idade = idade;
+    return candidato;
 }
 
