@@ -20,7 +20,7 @@ void menuUrna(Candidato **lista){
         inserirCandidato(lista);
         break;
     case 2:
-        /* Remover Candidato */
+        (*lista) = removerCandidato(lista,9);
         break;
     case 3:
         listarCandidatos(*lista);

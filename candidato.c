@@ -41,11 +41,13 @@ struct candidato * getData(){
         lista->anterior=aux;
         isFirst=FALSE;
     }
-    lista=lista->anterior;
-    free(lista->proximo);
-    lista->proximo=NULL;
-    while(lista->anterior){
-        lista = lista->anterior;
+    if(lista!=NULL){
+        lista=lista->anterior;
+        free(lista->proximo);
+        lista->proximo=NULL;
+        while(lista->anterior){
+            lista = lista->anterior;
+        }
     }
     return (lista);
 }
@@ -112,7 +114,6 @@ void inserirCandidato(struct candidato **lista){
 struct candidato* removerCandidato(struct candidato **lista, int numero){
     struct candidato *aux=NULL;
     struct candidato *remover = NULL;
-
     if(*lista){
         if((*lista)->numero == numero){
             remover = *lista;
@@ -135,6 +136,13 @@ struct candidato* removerCandidato(struct candidato **lista, int numero){
             }
         }
     }
+    FILE *banco;
+    banco = fopen("banco.txt","w");
+    while (remover != NULL){
+        fprintf(banco,"Numero: %d \n",remover->numero);
+        remover = remover->proximo;
+    }
+    fclose(banco);
     return remover;
 }
 
