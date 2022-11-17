@@ -1,2 +1,2 @@
 int exibirMenu();
-void exibir_remover_Candidato();
+void exibir_remover_Candidato(Candidato *lista);

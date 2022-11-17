@@ -118,8 +118,7 @@ void removerCandidato(struct candidato **lista){
     struct candidato *aux=NULL;
     struct candidato *remover = NULL;
     int numeroRemover;
-    printf("Digite o numero do candidato que deseja remover: ");
-    scanf("%d",&numeroRemover);
+    numeroRemover = exibirRemoverCandidato();
     if(*lista){
         if((*lista)->numero == numeroRemover){
             remover = (*lista);
