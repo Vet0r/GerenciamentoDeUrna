@@ -34,7 +34,7 @@ struct candidato * getData(){
         if (isFirst==TRUE){
             lista = criarCandidato();
         }                         
-        sscanf(linha,"Numero: %d\tIdade: %d\n",&lista->numero,&lista->idade);           
+        sscanf(linha,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",lista->nome,lista->idade,lista->numero,lista->partido,lista->vice,lista->estado);           
         lista->proximo=criarCandidato();  
         aux=lista;                  
         lista=lista->proximo;
@@ -57,14 +57,32 @@ void inserirCandidato(struct candidato **lista){
      struct candidato *novo = criarCandidato();
 
     if(novo){
-        int numero;
+        char nome[20];
         int idade;
+        int numero;
+        char partido[10];
+        char vice[20];
+        char estado[20];
+        printf("Digite o nome do Candidato: ");
+        scanf("%20s",&nome);
         printf("Digite o numero do Candidato: ");
         scanf("%d",&numero);
         printf("Digite a idade do Candidato: ");
         scanf("%d",&idade);
-        //strcpy(novo->numero,numero);
+        printf("Digite o partido do Candidato: ");
+        scanf("%s",&partido);
+        printf("Digite o nome do vice do Candidato: ");
+        scanf("%20s",&vice);
+        printf("Digite a sigla do estado do Candidato: ");
+        scanf("%4s",&estado);
+
+        strcpy(novo->nome,nome);
         novo->numero=numero;
+        novo->idade = idade;
+        strcpy(novo->partido,partido);
+        strcpy(novo->vice,vice);
+        strcpy(novo->estado,estado);
+
         if(*lista == NULL){
             *lista = novo;
         }
@@ -99,7 +117,7 @@ void inserirCandidato(struct candidato **lista){
     FILE *banco;
     banco = fopen("banco.txt","w");
     while (aux != NULL){
-        fprintf(banco,"Numero: %d\tIdade: %d\n",aux->numero,aux->idade);
+        fprintf(banco,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
         aux = aux->proximo;
     }
     fclose(banco);
@@ -146,7 +164,7 @@ void removerCandidato(struct candidato **lista){
     banco = fopen("banco.txt","w");
     aux=(*lista);
     while (aux != NULL){
-        fprintf(banco,"Numero: %d\tIdade: %d\n",aux->numero,aux->idade);
+        fprintf(banco,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
         aux = aux->proximo;
     }
     fclose(banco);
@@ -180,9 +198,10 @@ void buscarCandidato(struct candidato **lista){
 void listarCandidatos(struct candidato *lista){
     lista = getData(); 
     struct candidato *aux = lista;
-    printf("\n\tLista:\n ");
+    exibirCabecarioListarCandidatos();
     while(aux){
-        printf("%d %d\n", aux->numero,aux->idade);
+       // char *nome,int idade,int numero,char *partido,char *vice,char *estado
+        exibirListarCandidatos(aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
         aux = aux->proximo;
     }
     printf("\n\n");
@@ -222,7 +241,7 @@ void editarCandidato(struct candidato **lista){
         banco = fopen("banco.txt","w");
         aux=(*lista);
         while (aux != NULL){
-            fprintf(banco,"Numero: %d\tIdade: %d\n",aux->numero,aux->idade);
+            fprintf(banco,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
             aux = aux->proximo;
         }
         fclose(banco);
