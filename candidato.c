@@ -34,7 +34,7 @@ struct candidato * getData(){
         if (isFirst==TRUE){
             lista = criarCandidato();
         }                         
-        sscanf(linha,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",lista->nome,lista->idade,lista->numero,lista->partido,lista->vice,lista->estado);           
+        sscanf(linha,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",&lista->nome,&lista->idade,&lista->numero,&lista->partido,&lista->vice,&lista->estado);           
         lista->proximo=criarCandidato();  
         aux=lista;                  
         lista=lista->proximo;
@@ -86,14 +86,14 @@ void inserirCandidato(struct candidato **lista){
         if(*lista == NULL){
             *lista = novo;
         }
-        else if(novo->numero < (*lista)->numero){
+        else if(novo->nome[0] < (*lista)->nome[0]){
             novo->proximo = *lista;
             (*lista)->anterior = novo;
             *lista = novo;
         }
         else{
            aux = *lista;
-            while(aux->proximo && novo->numero > aux->proximo->numero)
+            while(aux->proximo && novo->nome[0] > aux->proximo->nome[0])
                 aux = aux->proximo;
             novo->proximo = aux->proximo;
             if(aux->proximo)
@@ -200,7 +200,6 @@ void listarCandidatos(struct candidato *lista){
     struct candidato *aux = lista;
     exibirCabecarioListarCandidatos();
     while(aux){
-       // char *nome,int idade,int numero,char *partido,char *vice,char *estado
         exibirListarCandidatos(aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
         aux = aux->proximo;
     }

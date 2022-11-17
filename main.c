@@ -9,6 +9,7 @@
 int main(){
     UINT CPAGE_UTF8 = 65001;
     SetConsoleOutputCP(CPAGE_UTF8);
+    system("cls");
     Candidato *lista=getData();
     menuUrna(&lista);
     return 0;
