@@ -34,7 +34,7 @@ struct candidato * getData(){
         if (isFirst==TRUE){
             lista = criarCandidato();
         }                         
-        sscanf(linha,"Numero: %d",&lista->numero);           
+        sscanf(linha,"Numero: %d\tIdade: %d\n",&lista->numero,&lista->idade);           
         lista->proximo=criarCandidato();  
         aux=lista;                  
         lista=lista->proximo;
@@ -58,8 +58,11 @@ void inserirCandidato(struct candidato **lista){
 
     if(novo){
         int numero;
+        int idade;
         printf("Digite o numero do Candidato: ");
         scanf("%d",&numero);
+        printf("Digite a idade do Candidato: ");
+        scanf("%d",&idade);
         //strcpy(novo->numero,numero);
         novo->numero=numero;
         if(*lista == NULL){
@@ -96,7 +99,7 @@ void inserirCandidato(struct candidato **lista){
     FILE *banco;
     banco = fopen("banco.txt","w");
     while (aux != NULL){
-        fprintf(banco,"Numero: %d \n",aux->numero);
+        fprintf(banco,"Numero: %d\tIdade: %d\n",aux->numero,aux->idade);
         aux = aux->proximo;
     }
     fclose(banco);
@@ -144,7 +147,7 @@ void removerCandidato(struct candidato **lista){
     banco = fopen("banco.txt","w");
     aux=(*lista);
     while (aux != NULL){
-        fprintf(banco,"Numero: %d \n",aux->numero);
+        fprintf(banco,"Numero: %d\tIdade: %d\n",aux->numero,aux->idade);
         aux = aux->proximo;
     }
     fclose(banco);
@@ -152,7 +155,7 @@ void removerCandidato(struct candidato **lista){
     menuUrna(lista);
 }
 
-struct candidato* buscarCandidato(struct candidato **lista){
+void buscarCandidato(struct candidato **lista){
     struct candidato *aux = NULL; 
     struct candidato *candidato = NULL;
     int numero;
@@ -178,9 +181,9 @@ struct candidato* buscarCandidato(struct candidato **lista){
 void listarCandidatos(struct candidato *lista){
     lista = getData(); 
     struct candidato *aux = lista;
-    printf("\n\tLista: ");
+    printf("\n\tLista:\n ");
     while(aux){
-        printf("%d ", aux->numero);
+        printf("%d %d\n", aux->numero,aux->idade);
         aux = aux->proximo;
     }
     printf("\n\n");
@@ -189,18 +192,46 @@ void listarCandidatos(struct candidato *lista){
     menuUrna(&lista);
 }
 
-struct candidato* editarCandidato(struct candidato **lista, int numero,int idade){
+void editarCandidato(struct candidato **lista){
     struct candidato *aux = NULL; 
     struct candidato *candidato = NULL;
+    int numero;
+    int idade;
+    int n=0,i;
+    printf("digite o numero do candidato que deseja editar:");
+    scanf("%d",&numero);
 
     aux = *lista;
-    while((aux && aux->numero) != (numero)){
+    while(aux && aux->numero != numero){
         aux = aux->proximo;   
+        n++;
     }
     if(aux){
         candidato = aux;
     }
-    candidato->idade = idade;
-    return candidato;
+    aux=(*lista);
+    if (candidato){
+        printf("Digite a idade do coandidato: ");
+        scanf("%d",&idade);
+        for (i = 0; i < n; i++){
+            (*lista)=(*lista)->proximo;
+        }
+        (*lista)->idade = idade;
+        (*lista)=aux;
+        
+        FILE *banco;
+        banco = fopen("banco.txt","w");
+        aux=(*lista);
+        while (aux != NULL){
+            fprintf(banco,"Numero: %d\tIdade: %d\n",aux->numero,aux->idade);
+            aux = aux->proximo;
+        }
+        fclose(banco);
+    }else{
+        printf("O candidadto não existe\n");
+        system("pause");
+    }
+    
+    menuUrna(lista);
 }
 

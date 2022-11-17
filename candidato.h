@@ -8,6 +8,6 @@ Candidato* criarCandidato(void);
 Candidato * getData();
 void inserirCandidato(Candidato **list);
 void removerCandidato(Candidato **lista);
-Candidato* buscarCandidato(Candidato **lista);
+void buscarCandidato(Candidato **lista);
 void listarCandidatos(Candidato *candidato);
-Candidato* editarCandidato(Candidato **lista, int numero,int idade);
+void editarCandidato(Candidato **lista);

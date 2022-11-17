@@ -29,7 +29,7 @@ void menuUrna(Candidato **lista){
         buscarCandidato(lista);
         break;
     case 5:
-        /* Editar candidato */
+        editarCandidato(lista);
         break;
     case 6:
         /* Consultar localização de uma urna */

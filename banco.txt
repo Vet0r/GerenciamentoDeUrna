@@ -1,6 +1,6 @@
-Numero: 11 
-Numero: 12 
-Numero: 14 
-Numero: 22 
-Numero: 28 
-Numero: 42 
+Numero: 11	Idade: 25
+Numero: 12	Idade: 21
+Numero: 14	Idade: 22
+Numero: 22	Idade: 43
+Numero: 28	Idade: 24
+Numero: 42	Idade: 25
