@@ -20,13 +20,13 @@ void menuUrna(Candidato **lista){
         inserirCandidato(lista);
         break;
     case 2:
-        (*lista) = removerCandidato(lista,9);
+        removerCandidato(lista);
         break;
     case 3:
         listarCandidatos(*lista);
         break;
     case 4:
-        /* Buscar candidato */
+        buscarCandidato(lista);
         break;
     case 5:
         /* Editar candidato */

@@ -111,20 +111,24 @@ void inserirCandidato(struct candidato **lista){
     menuUrna(lista);
 }
 
-struct candidato* removerCandidato(struct candidato **lista, int numero){
+void removerCandidato(struct candidato **lista){
     struct candidato *aux=NULL;
     struct candidato *remover = NULL;
+    int numeroRemover;
+    printf("Digite o numero do candidato que deseja remover: ");
+    scanf("%d",&numeroRemover);
     if(*lista){
-        if((*lista)->numero == numero){
-            remover = *lista;
-            *lista = remover->proximo;
+        if((*lista)->numero == numeroRemover){
+            remover = (*lista);
+            (*lista) = remover->proximo;
             if(*lista){
+                free((*lista)->anterior);
                 (*lista)->anterior = NULL;
             }
         }
         else{
             aux = *lista;
-            while(aux->proximo && aux->proximo->numero != numero){
+            while(aux->proximo && aux->proximo->numero != numeroRemover){
                 aux = aux->proximo;
             }
             if(aux->proximo){
@@ -138,26 +142,37 @@ struct candidato* removerCandidato(struct candidato **lista, int numero){
     }
     FILE *banco;
     banco = fopen("banco.txt","w");
-    while (remover != NULL){
-        fprintf(banco,"Numero: %d \n",remover->numero);
-        remover = remover->proximo;
+    aux=(*lista);
+    while (aux != NULL){
+        fprintf(banco,"Numero: %d \n",aux->numero);
+        aux = aux->proximo;
     }
     fclose(banco);
-    return remover;
+    system("cls");
+    menuUrna(lista);
 }
 
-struct candidato* buscarCandidato(struct candidato **lista, int numero){
+struct candidato* buscarCandidato(struct candidato **lista){
     struct candidato *aux = NULL; 
     struct candidato *candidato = NULL;
+    int numero;
+    printf("Digie o numero a ser buscado: ");
+    scanf("%d", &numero);
 
-    aux = *lista;
-    while((aux && aux->numero) != (numero)){
+    aux = (*lista);
+    while(aux && aux->numero != numero){
         aux = aux->proximo;   
     }
     if(aux){
         candidato = aux;
     }
-    return candidato;
+    if (candidato){
+        printf("candidato %d\n\n",candidato->numero);
+    }else{
+        printf("O candidato não existe\n\n");
+    }
+    system("pause");
+    menuUrna(lista);
 }
 
 void listarCandidatos(struct candidato *lista){
