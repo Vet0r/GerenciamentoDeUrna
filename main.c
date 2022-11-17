@@ -9,7 +9,7 @@
 int main(){
     UINT CPAGE_UTF8 = 65001;
     SetConsoleOutputCP(CPAGE_UTF8);
-    Candidato *lista=NULL;
+    Candidato *lista=getData();
     menuUrna(&lista);
     return 0;
 }

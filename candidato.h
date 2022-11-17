@@ -5,6 +5,7 @@
 typedef struct candidato Candidato;
 
 Candidato* criarCandidato(void);
+Candidato * getData();
 void inserirCandidato(Candidato **list);
 Candidato* removerCandidato(Candidato **lista, int numero);
 Candidato* buscarCandidato(Candidato **lista, int numero);

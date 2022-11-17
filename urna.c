@@ -13,6 +13,7 @@ struct urna {
 };
 
 void menuUrna(Candidato **lista){
+
     int opcao=exibirMenu();
     switch (opcao){
     case 1:

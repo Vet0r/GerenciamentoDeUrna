@@ -3,6 +3,7 @@
 #include <string.h>
 #include <windows.h>
 #include "urna.h"
+#include "candidato.h"
 struct candidato {
     char nome[20];
     int idade;
@@ -22,35 +23,58 @@ struct candidato* criarCandidato(){
     return cand;
 }
 
+struct candidato * getData(){
+    char linha[80];
+    FILE *banco = fopen("banco.txt","r");
+
+    struct candidato *lista=NULL;
+    struct candidato *aux =NULL;
+    BOOL isFirst=TRUE;
+    while (fgets(linha, 80, banco) != NULL){    
+        if (isFirst==TRUE){
+            lista = criarCandidato();
+        }                         
+        sscanf(linha,"Numero: %d",&lista->numero);           
+        lista->proximo=criarCandidato();  
+        aux=lista;                  
+        lista=lista->proximo;
+        lista->anterior=aux;
+        isFirst=FALSE;
+    }
+    lista=lista->anterior;
+    free(lista->proximo);
+    lista->proximo=NULL;
+    while(lista->anterior){
+        lista = lista->anterior;
+    }
+    return (lista);
+}
+
 void inserirCandidato(struct candidato **lista){
-     struct candidato *aux, *novo = malloc(sizeof(struct candidato));
+     struct candidato *aux;
+     struct candidato *novo = criarCandidato();
 
     if(novo){
         int numero;
-        printf("Digite o numero do candidato: ");
+        printf("Digite o numero do Candidato: ");
         scanf("%d",&numero);
         //strcpy(novo->numero,numero);
         novo->numero=numero;
         if(*lista == NULL){
-            novo->proximo = NULL;
-            novo->anterior = NULL;
             *lista = novo;
         }
         else if(novo->numero < (*lista)->numero){
-            printf("meio");
             novo->proximo = *lista;
             (*lista)->anterior = novo;
             *lista = novo;
         }
         else{
-            aux = *lista;
-            while((aux->proximo && novo->numero) > (aux->proximo->numero)){
+           aux = *lista;
+            while(aux->proximo && novo->numero > aux->proximo->numero)
                 aux = aux->proximo;
-            }
             novo->proximo = aux->proximo;
-            if(aux->proximo){
+            if(aux->proximo)
                 aux->proximo->anterior = novo;
-            }
             novo->anterior = aux;
             aux->proximo = novo;
         }
@@ -65,7 +89,17 @@ void inserirCandidato(struct candidato **lista){
         system("cls");
         menuUrna(lista);
     }
-    printf("struct candidato alocado com sucesso!!! \nRetornando a tela inicial");
+    aux = (*lista);
+
+    FILE *banco;
+    banco = fopen("banco.txt","w");
+    while (aux != NULL){
+        fprintf(banco,"Numero: %d \n",aux->numero);
+        aux = aux->proximo;
+    }
+    fclose(banco);
+
+    printf("Candidato criado com sucesso!!! \nRetornando a tela inicial");
     for (i = 0; i < 3; i++)
     {
         Sleep(500);
@@ -118,19 +152,16 @@ struct candidato* buscarCandidato(struct candidato **lista, int numero){
     return candidato;
 }
 
-void listarCandidatos(struct candidato *lista){ 
+void listarCandidatos(struct candidato *lista){
+    lista = getData(); 
+    struct candidato *aux = lista;
     printf("\n\tLista: ");
-    while(lista){
-        printf("%d ", lista->numero);
-        lista = lista->proximo;
+    while(aux){
+        printf("%d ", aux->numero);
+        aux = aux->proximo;
     }
     printf("\n\n");
-    printf("Pressione qualquer tecla para retornar ao menú");
-    for (i = 0; i < 3; i++)
-    {
-        Sleep(500);
-        printf(".");
-    }
+    system("pause");
     system("cls");
     menuUrna(&lista);
 }
