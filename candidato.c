@@ -176,8 +176,7 @@ void buscarCandidato(struct candidato **lista){
     struct candidato *aux = NULL; 
     struct candidato *candidato = NULL;
     int numero;
-    printf("Digie o numero a ser buscado: ");
-    scanf("%d", &numero);
+    numero = exibirBuscarCandidato();
 
     aux = (*lista);
     while(aux && aux->numero != numero){
@@ -187,7 +186,8 @@ void buscarCandidato(struct candidato **lista){
         candidato = aux;
     }
     if (candidato){
-        printf("candidato %d\n\n",candidato->numero);
+        exibirCabecarioListarCandidatos();
+        exibirListarCandidatos(candidato->nome, candidato->idade, candidato->numero, candidato->partido, candidato->vice, candidato->estado);
     }else{
         printf("O candidato não existe\n\n");
     }
@@ -212,11 +212,14 @@ void listarCandidatos(struct candidato *lista){
 void editarCandidato(struct candidato **lista){
     struct candidato *aux = NULL; 
     struct candidato *candidato = NULL;
-    int numero;
+    char nome[20];
     int idade;
+    int numero;
+    char partido[10];
+    char vice[20];
+    char estado[20];
     int n=0,i;
-    printf("digite o numero do candidato que deseja editar:");
-    scanf("%d",&numero);
+    numero = exibirBuscarCandidato();
 
     aux = *lista;
     while(aux && aux->numero != numero){
@@ -228,12 +231,14 @@ void editarCandidato(struct candidato **lista){
     }
     aux=(*lista);
     if (candidato){
-        printf("Digite a idade do coandidato: ");
-        scanf("%d",&idade);
+        int opcao=0;
+        while (opcao<=0||opcao>=7){
+            opcao=choseEditor();
+        }
+        exibirEditarCandidato(candidato->nome, candidato->idade, candidato->numero, candidato->partido, candidato->vice, candidato->estado, opcao);
         for (i = 0; i < n; i++){
             (*lista)=(*lista)->proximo;
         }
-        (*lista)->idade = idade;
         (*lista)=aux;
         
         FILE *banco;
