@@ -12,4 +12,4 @@ void removerCandidato(Candidato **lista);
 void buscarCandidato(Candidato **lista);
 void listarCandidatos(Candidato *candidato);
 void editarCandidato(Candidato **lista);
-void localizarUrna(Urna *u,Candidato **lista);
+void localizarUrna(Candidato **lista);

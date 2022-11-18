@@ -34,7 +34,7 @@ void menuUrna(Candidato **lista){
         editarCandidato(lista);
         break;
     case 6:
-        localizarUrna(&u,lista);
+        localizarUrna(lista);
         break;
     case 7:
         exit(0);

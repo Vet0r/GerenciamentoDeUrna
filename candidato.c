@@ -17,7 +17,7 @@ struct candidato {
 
 int i;
 char idUrna[12];
-void clearidUrna(){
+void clearCodUrna(){
     memset(idUrna,0,strlen(idUrna));
 }
 struct candidato* criarCandidato(){
@@ -240,7 +240,7 @@ void editarCandidato(struct candidato **lista){
     menuUrna(lista);
 }
 
-void localizarUrna(Urna *u,Candidato **lista){
+void localizarUrna(Candidato **lista){
     //exibirLocalizacaoUrna(*u->candidatos->estado);
     exibirLocalizacaoUrna((*lista)->estado);
     system("cls");
