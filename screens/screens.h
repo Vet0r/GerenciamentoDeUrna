@@ -7,3 +7,5 @@ void exibirCabecarioEditarCandidato(int num);
 void exibirEditarCandidato(char *nome, int idade, int numero, char *partido, char *vice, char *estado);
 void exibirLocalizacaoUrna(int num);
 void exibirAdicionarCandidato(char *nome, int idade, int numero, char *partido, char *vice, char *estado);
+void exibirTeladeSucesso();
+void exibirTeladeErro();
