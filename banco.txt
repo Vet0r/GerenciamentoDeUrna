@@ -1,3 +1,4 @@
-Nome: Rosana	Idade: 28	Numero: 42	Partido: PT	Vice: Vinicius	Estado: RN
-Nome: Vitor	Idade: 25	Numero: 55	Partido: PL	Vice: Rosana	Estado: PR
-Nome: Vetoor	Idade: 22	Numero: 66	Partido: PR	Vice: XAXA	Estado: SP
+Nome: Lula	Idade: 86	Numero: 13	Partido: PT	Vice: Alguem	Estado: SP
+Nome: Bolsonaro	Idade: 80	Numero: 22	Partido: PL	Vice: SeiN	Estado: RJ
+Nome: Sara	Idade: 85	Numero: 22	Partido: PP	Vice: Venancio	Estado: RN
+Nome: Vitor	Idade: 24	Numero: 42	Partido: NE	Vice: Irlan	Estado: RN

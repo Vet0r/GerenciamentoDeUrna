@@ -8,11 +8,13 @@
 struct urna {
     int idUrna; 
     int numeroDeCandidatos;
-    char candidatos;
+    Candidato *candidatos;
     int votos;
 };
 
 void menuUrna(Candidato **lista){
+    Urna u;
+    u.candidatos=(*lista);
 
     int opcao=exibirMenu();
     switch (opcao){
@@ -32,7 +34,7 @@ void menuUrna(Candidato **lista){
         editarCandidato(lista);
         break;
     case 6:
-        /* Consultar localização de uma urna */
+        localizarUrna(&u,lista);
         break;
     case 7:
         exit(0);

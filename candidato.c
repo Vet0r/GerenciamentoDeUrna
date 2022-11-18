@@ -16,6 +16,10 @@ struct candidato {
 };
 
 int i;
+char idUrna[12];
+void clearidUrna(){
+    memset(idUrna,0,strlen(idUrna));
+}
 struct candidato* criarCandidato(){
     struct candidato * cand = (struct candidato*) malloc(sizeof(struct candidato));
     cand->proximo = NULL;
@@ -23,9 +27,14 @@ struct candidato* criarCandidato(){
     return cand;
 }
 
-struct candidato * getData(){
+struct candidato * getData(char *Urna){
+    if (idUrna[0]=='\0'){
+        printf("Entrei");
+        strcat(Urna, ".txt");
+        strcpy(idUrna,Urna);
+    } 
     char linha[80];
-    FILE *banco = fopen("banco.txt","r");
+    FILE *banco = fopen(idUrna,"r");
 
     struct candidato *lista=NULL;
     struct candidato *aux =NULL;
@@ -63,25 +72,7 @@ void inserirCandidato(struct candidato **lista){
         char partido[10];
         char vice[20];
         char estado[20];
-        printf("Digite o nome do Candidato: ");
-        scanf("%20s",&nome);
-        printf("Digite o numero do Candidato: ");
-        scanf("%d",&numero);
-        printf("Digite a idade do Candidato: ");
-        scanf("%d",&idade);
-        printf("Digite o partido do Candidato: ");
-        scanf("%s",&partido);
-        printf("Digite o nome do vice do Candidato: ");
-        scanf("%20s",&vice);
-        printf("Digite a sigla do estado do Candidato: ");
-        scanf("%4s",&estado);
-
-        strcpy(novo->nome,nome);
-        novo->numero=numero;
-        novo->idade = idade;
-        strcpy(novo->partido,partido);
-        strcpy(novo->vice,vice);
-        strcpy(novo->estado,estado);
+        exibirAdicionarCandidato(&novo->nome, &novo->idade, &novo->numero, &novo->partido, &novo->vice, &novo->estado);
 
         if(*lista == NULL){
             *lista = novo;
@@ -103,31 +94,23 @@ void inserirCandidato(struct candidato **lista){
         }
     }
     else{
+        exibirTeladeErro();
         printf("Erro ao alocar memoria!\nRetornando a tela inicial");
-        for (i = 0; i < 3; i++)
-        {
-            Sleep(500);
-            printf(".");
-        }
-        system("cls");
+        system("pause");
         menuUrna(lista);
     }
     aux = (*lista);
 
     FILE *banco;
-    banco = fopen("banco.txt","w");
+    banco = fopen(idUrna,"w");
     while (aux != NULL){
         fprintf(banco,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
         aux = aux->proximo;
     }
     fclose(banco);
 
-    printf("Candidato criado com sucesso!!! \nRetornando a tela inicial");
-    for (i = 0; i < 3; i++)
-    {
-        Sleep(500);
-        printf(".");
-    }
+    exibirTeladeSucesso();
+    system("pause");
     system("cls");
     menuUrna(lista);
 }
@@ -161,7 +144,7 @@ void removerCandidato(struct candidato **lista){
         }
     }
     FILE *banco;
-    banco = fopen("banco.txt","w");
+    banco = fopen(idUrna,"w");
     aux=(*lista);
     while (aux != NULL){
         fprintf(banco,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
@@ -196,7 +179,7 @@ void buscarCandidato(struct candidato **lista){
 }
 
 void listarCandidatos(struct candidato *lista){
-    lista = getData(); 
+    lista = getData(idUrna); 
     struct candidato *aux = lista;
     exibirCabecarioListarCandidatos();
     while(aux){
@@ -242,7 +225,7 @@ void editarCandidato(struct candidato **lista){
         (*lista)=aux;
         
         FILE *banco;
-        banco = fopen("banco.txt","w");
+        banco = fopen(idUrna,"w");
         aux=(*lista);
         while (aux != NULL){
             fprintf(banco,"Nome: %s\tIdade: %d\tNumero: %d\tPartido: %s\tVice: %s\tEstado: %s\n",aux->nome,aux->idade,aux->numero,aux->partido,aux->vice,aux->estado);
@@ -250,10 +233,18 @@ void editarCandidato(struct candidato **lista){
         }
         fclose(banco);
     }else{
-        printf("O candidadto não existe\n");
+        exibirTeladeErro();
+        printf("\t\tO candidadto não existe\t\t\n");
         system("pause");
     }
     
+    menuUrna(lista);
+}
+
+void localizarUrna(Urna *u,Candidato **lista){
+    //exibirLocalizacaoUrna(*u->candidatos->estado);
+    exibirLocalizacaoUrna((*lista)->estado);
+    system("cls");
     menuUrna(lista);
 }
 

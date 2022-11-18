@@ -5,9 +5,11 @@
 typedef struct candidato Candidato;
 
 Candidato* criarCandidato(void);
-Candidato * getData();
+Candidato * getData(char *Urna);
+void clearCodUrna();
 void inserirCandidato(Candidato **list);
 void removerCandidato(Candidato **lista);
 void buscarCandidato(Candidato **lista);
 void listarCandidatos(Candidato *candidato);
 void editarCandidato(Candidato **lista);
+void localizarUrna(Urna *u,Candidato **lista);
