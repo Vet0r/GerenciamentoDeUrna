@@ -29,7 +29,6 @@ struct candidato* criarCandidato(){
 
 struct candidato * getData(char *Urna){
     if (idUrna[0]=='\0'){
-        printf("Entrei");
         strcat(Urna, ".txt");
         strcpy(idUrna,Urna);
     } 
