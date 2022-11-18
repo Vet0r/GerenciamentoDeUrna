@@ -214,10 +214,10 @@ void editarCandidato(struct candidato **lista){
     aux=(*lista);
     if (candidato){
         int opcao=0;
-        while (opcao<=0||opcao>=7){
+        while (opcao<=0||opcao>=6){
             opcao=choseEditor();
         }
-        exibirEditarCandidato(candidato->nome, candidato->idade, candidato->numero, candidato->partido, candidato->vice, candidato->estado, opcao);
+        exibirEditarCandidato(candidato->nome, candidato->idade, candidato->partido, candidato->vice, candidato->estado, opcao);
         for (i = 0; i < n; i++){
             (*lista)=(*lista)->proximo;
         }

@@ -1,2 +1,2 @@
-Nome: Irlan	Idade: 22	Numero: 13	Partido: aaaa	Vice: aaaa	Estado: RN
+Nome: Irlan	Idade: 22	Numero: 13	Partido: PT	Vice: aaaa	Estado: RN
 Nome: Vetor	Idade: 22	Numero: 15	Partido: PE	Vice: VE	Estado: RN
