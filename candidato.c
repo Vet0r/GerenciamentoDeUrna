@@ -72,7 +72,18 @@ void inserirCandidato(struct candidato **lista){
         char vice[20];
         char estado[20];
         exibirAdicionarCandidato(&novo->nome, &novo->idade, &novo->numero, &novo->partido, &novo->vice, &novo->estado);
+        aux=(*lista);
 
+        while(aux){
+            if (aux->numero == novo->numero){
+                exibirTeladeErro();
+                printf("Candidato com mesmo número já alocado!");
+                system("pause");
+                menuUrna(lista);
+            }
+            aux = aux->proximo;
+        }
+        
         if(*lista == NULL){
             *lista = novo;
         }
